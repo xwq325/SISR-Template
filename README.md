@@ -56,7 +56,7 @@ Or use common line:
 python main.py --dir_data /MyModel/dataset
 ```
 
-## Common Line(Linux)
+## Command Line(Linux)
 
 Run as:
 
