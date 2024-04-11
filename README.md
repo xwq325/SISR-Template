@@ -33,6 +33,9 @@ This is on main.py line 2
 Run on GPUs by:
 Python main.py --n_GPUs 2
 ```
+## ADD Params and Flops
+
+TODO
 
 ## Dataset Download
 
