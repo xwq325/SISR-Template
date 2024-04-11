@@ -1,0 +1,4 @@
+numpy
+scikit-image
+tqdm==4.36.1
+opencv-python
