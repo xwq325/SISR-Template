@@ -38,9 +38,9 @@ Python main.py --n_GPUs 2
 
 Such as:
 
-'''
+```
 python main.py --data_test Manga109
-'''
+```
 
 ## Add Params and Flops
 
