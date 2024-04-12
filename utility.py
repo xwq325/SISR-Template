@@ -5,9 +5,7 @@ import datetime
 from multiprocessing import Process
 from multiprocessing import Queue
 
-from scipy import signal
 import cv2
-
 import matplotlib
 
 matplotlib.use('Agg')
@@ -189,8 +187,8 @@ def calc_psnr(sr, hr, scale, rgb_range, dataset=None):
 
     return -10 * math.log10(mse)
 
-def calc_ssim(X, Y, scale, rgb_range, dataset=None):
 
+def calc_ssim(X, Y, scale, rgb_range, dataset=None):
     if dataset and dataset.dataset.benchmark:
         shave = scale
         if X.size(1) > 1:
@@ -201,9 +199,9 @@ def calc_ssim(X, Y, scale, rgb_range, dataset=None):
     else:
         shave = scale + 6
 
-    X = X[..., shave:-shave, shave:-shave].squeeze().cpu().numpy().astype(np.float64) 
+    X = X[..., shave:-shave, shave:-shave].squeeze().cpu().numpy().astype(np.float64)
     Y = Y[..., shave:-shave, shave:-shave].squeeze().cpu().numpy().astype(np.float64)
-    
+
     if X.ndim == 2:
         return ssim(X, Y)
     elif X.ndim == 3:
@@ -237,6 +235,7 @@ def ssim(img1, img2):
     ssim_map = ((2 * mu1_mu2 + C1) * (2 * sigma12 + C2)) / ((mu1_sq + mu2_sq + C1) *
                                                             (sigma1_sq + sigma2_sq + C2))
     return ssim_map.mean()
+
 
 '''
 def matlab_style_gauss2D(shape=(3,3),sigma=0.5):
@@ -290,6 +289,7 @@ def calc_ssim(X, Y, scale, rgb_range, dataset=None, sigma=1.5, K1=0.01, K2=0.03,
 
   return mssim
 '''
+
 
 def make_optimizer(args, target):
     '''

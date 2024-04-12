@@ -6,7 +6,6 @@ import numpy as np
 import random
 import utility
 import data
-import model
 import loss
 from option import args
 from trainer import Trainer
@@ -18,10 +17,9 @@ torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 torch.backends.cudnn.deterministic = True
 
-checkpoint = utility.checkpoint(args)
-
 
 def main():
+    checkpoint = utility.checkpoint(args)
     global model
     if args.data_test == ['video']:
         from videotester import VideoTester
