@@ -14,7 +14,7 @@ python main.py --scale 2+3+4
 
 Base on [EDSR-ssim](https://github.com/HolmesShuan/EDSR-ssim) and [DSRNet](https://github.com/hellloxiaotian/DSRNet/blob/main/DSRNet/sample.py#L56).
 
-Only show the current epoch's avg_SSIM, and provide two implement method.
+Only show the current epoch's avg_SSIM, and provide two implementation method.
 
 If you need the best SSIM, please change the test method in trainer.py
 
@@ -33,9 +33,13 @@ This is on main.py line 2
 Run on GPUs by:
 Python main.py --n_GPUs 2
 ```
-## ADD Params and Flops
+## Add Params and Flops
 
 TODO
+
+## Add IDN Implementation
+
+[IDN](arxiv.org/abs/1803.09454): Fast and Accurate Single Image Super-Resolution via Information Distillation Network
 
 ## Dataset Download
 
@@ -53,7 +57,7 @@ And change the option.py :
 
 ![image-20240412045948359](https://cdn.jsdelivr.net/gh/xwq325/PicGo@main/image-20240412045948359.png)
 
-Or use common line:
+Or use command line:
 
 ```
 python main.py --dir_data /MyModel/dataset
