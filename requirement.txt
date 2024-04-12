@@ -1,4 +1,6 @@
 numpy
 scikit-image
-tqdm==4.36.1
+imageio
+matplotlib
+tqdm
 opencv-python
