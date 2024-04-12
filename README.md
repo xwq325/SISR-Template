@@ -52,9 +52,9 @@ TODO
 
 ## Dataset Download
 
-[Benchmark1](https://cv.snu.ac.kr/research/EDSR/benchmark.tar): Set5, Set14, B100, U100. Scale x2, x3, x4.
+[Benchmark1](https://cv.snu.ac.kr/research/EDSR/benchmark.tar): Set5, Set14, B100, U100 with x2, x3, x4.
 
-[Benchmark2](https://drive.google.com/drive/folders/1-99XFJs_fvQ2wFdxXrnJFcRRyPJYKN0K): Set5, Set14, B100, U100, DIV2K, Manga109. Scale x2, x3, x4, x8.
+[Benchmark2](https://drive.google.com/drive/folders/1-99XFJs_fvQ2wFdxXrnJFcRRyPJYKN0K): Set5, Set14, B100, U100, DIV2K, Manga109 with x2, x3, x4, x8. But I don't test my template with scale x8 yet.
 
 [DIV2K](https://cv.snu.ac.kr/research/EDSR/DIV2K.tar): DIV2K
 
