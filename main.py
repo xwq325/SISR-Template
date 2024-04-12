@@ -6,6 +6,7 @@ import numpy as np
 import random
 import utility
 import data
+import model
 import loss
 from option import args
 from trainer import Trainer
