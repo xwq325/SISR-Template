@@ -155,5 +155,9 @@ I have run it in these environments.
 
 Please keep CUDA/PyTorch/Device consistent as far as possible.
 
+## Debug Log
 
+- Plot psnr : Plot four curve on the graph
+- Config.txt write : Call checkpoint.init circularly when codes run on Windows PyCharm, this lead to write config.txt problem.
+- And more......
 
