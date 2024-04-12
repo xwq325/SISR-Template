@@ -33,6 +33,9 @@ This is on main.py line 2
 Run on GPUs by:
 Python main.py --n_GPUs 2
 ```
+## ADD Params and Flops
+
+TODO
 
 ## Dataset Download
 
@@ -56,7 +59,7 @@ Or use common line:
 python main.py --dir_data /MyModel/dataset
 ```
 
-## Common Line(Linux)
+## Command Line(Linux)
 
 Run as:
 
@@ -146,7 +149,7 @@ I have run it in these environments.
 - CUDA 9.2, 10.1, 11.3, 11.6, 11.7
 - RTX 2080Ti, RTX 3090 x1, RTX 3090 x2, RTX 3090 x4
 
-Please keep CUDA/PyTorch/Device consistent to the full.
+Please keep CUDA/PyTorch/Device consistent as far as possible.
 
 
 
