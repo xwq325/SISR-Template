@@ -43,7 +43,9 @@ TODO
 
 ## Dataset Download
 
-[Benchmark](https://cv.snu.ac.kr/research/EDSR/benchmark.tar): Set5, Set14, B100, U100
+[Benchmark1](https://cv.snu.ac.kr/research/EDSR/benchmark.tar): Set5, Set14, B100, U100. Scale x2, x3, x4.
+
+[Benchmark2](https://drive.google.com/drive/folders/1-99XFJs_fvQ2wFdxXrnJFcRRyPJYKN0K): Set5, Set14, B100, U100, DIV2K, Manga109. Scale x2, x3, x4, x8.
 
 [DIV2K](https://cv.snu.ac.kr/research/EDSR/DIV2K.tar): DIV2K
 
