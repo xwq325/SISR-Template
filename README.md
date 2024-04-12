@@ -33,6 +33,15 @@ This is on main.py line 2
 Run on GPUs by:
 Python main.py --n_GPUs 2
 ```
+
+## Add Manga109
+
+Such as:
+
+'''
+python main.py --data_test Manga109
+'''
+
 ## Add Params and Flops
 
 TODO
