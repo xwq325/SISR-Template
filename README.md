@@ -50,6 +50,12 @@ TODO
 
 [IDN](arxiv.org/abs/1803.09454): Fast and Accurate Single Image Super-Resolution via Information Distillation Network
 
+## CUDA out of memory
+
+When codes val or test on DIV2K, the error will be happen.
+
+Try to use '--chop' to finish the test.
+
 ## Dataset Download
 
 [Benchmark](https://cv.snu.ac.kr/research/EDSR/benchmark.tar): Set5, Set14, B100, U100 with x2, x3, x4.
@@ -203,6 +209,7 @@ Please keep CUDA/PyTorch/Device consistent as far as possible.
 - Plot psnr : Plot four curve on the graph
 - config.txt write : Call checkpoint.init circularly when codes run on Windows PyCharm, this lead to write config.txt problem.
 - get_lr(): In CustomOptimizer.get_lr(), return lr_scheduler.get_lr(). It should be get_last_lr() in PyTorch >= 1.1.
-- Problem resume: Refer to <a href="#BUG1">the Bug. </a>
+- resume: Refer to <a href="#BUG1">the Bug. </a>
+- chop：When chop is True, many problem will happen. I fix it refer to the [issues](https://github.com/sanghyun-son/EDSR-PyTorch/issues/184).
 - And more......
 
