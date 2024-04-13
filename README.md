@@ -96,7 +96,7 @@ Resume from N epochs to N+200 epochs as
 python main.py --model model_name --data_test DIV2K --data_range 1-800/801-810 --scale 2+3+4 --patch_size 32 --batch_size 16 --load save_dir --n_GPUs 1 --resume -1 --epoch N+200
 ```
 
-*BUG:*
+<a id="BUG1">*BUG:*</a>
 
 *If we resume from the previous epoch, the lr will wrong.*
 
@@ -197,6 +197,8 @@ Please keep CUDA/PyTorch/Device consistent as far as possible.
 ## Debug Log
 
 - Plot psnr : Plot four curve on the graph
-- Config.txt write : Call checkpoint.init circularly when codes run on Windows PyCharm, this lead to write config.txt problem.
+- config.txt write : Call checkpoint.init circularly when codes run on Windows PyCharm, this lead to write config.txt problem.
+- get_lr(): In CustomOptimizer.get_lr(), return lr_scheduler.get_lr(). It should be get_last_lr() in PyTorch >= 1.1.
+- Problem resume: Refer to <a href="#BUG1">the Bug. </a>
 - And more......
 
