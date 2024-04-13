@@ -96,6 +96,8 @@ Resume from N epochs to N+200 epochs as
 python main.py --model model_name --data_test DIV2K --data_range 1-800/801-810 --scale 2+3+4 --patch_size 32 --batch_size 16 --load save_dir --n_GPUs 1 --resume -1 --epoch N+200
 ```
 
+--------------------------------------------------------------------------------------------------------------
+
 <a id="BUG1">*BUG:*</a>
 
 *If we resume from the previous epoch, the lr will wrong.*
@@ -105,6 +107,8 @@ python main.py --model model_name --data_test DIV2K --data_range 1-800/801-810 -
 *We need set the decay to '400-600', bacause 200 < 300 < 400.*
 
 *Refer to the [issues](https://github.com/sanghyun-son/EDSR-PyTorch/issues/296)*
+
+--------------------------------------------------------------------------------------------------------------
 
 Test with results picture as:
 
