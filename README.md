@@ -112,7 +112,7 @@ Such as:
 python main.py --model model_name --data_test B100+DIV2K --data_range 1-800/801-810 --scale 2+3+4 --patch_size 32 --batch_size 16 --save save_dir --n_GPUs 2 --reset
 ```
 
-Above command line, the val_dataset is DIV2K(801-810), the test_dataset is B100(plot PSNR graph).
+Above command line, the val_dataset is DIV2K(801-810), the test_dataset is B100(It doesn't participate in the best model selection).
 
 Such as:
 
