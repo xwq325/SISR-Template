@@ -17,6 +17,8 @@ np.random.seed(args.seed)
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.enabled = True
+torch.backends.cudnn.benchmark = True
 
 
 def main():
