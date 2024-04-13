@@ -90,6 +90,22 @@ Resume as:
 python main.py --model model_name --data_test DIV2K --data_range 1-800/801-810 --scale 2+3+4 --patch_size 32 --batch_size 16 --load save_dir --n_GPUs 1 --resume -1
 ```
 
+Resume from N epochs to N+200 epochs as
+
+```
+python main.py --model model_name --data_test DIV2K --data_range 1-800/801-810 --scale 2+3+4 --patch_size 32 --batch_size 16 --load save_dir --n_GPUs 1 --resume -1 --epoch N+200
+```
+
+*BUG:*
+
+*If we resume from the previous epoch, the lr will wrong.*
+
+*Example: When the code resume from 300 epoch, and the previous lr is 1e-4, the previous decay is '200-400-600', the 301 epoch lr will be 2.5e-5 (It should be 5e-5).*
+
+*We need set the decay to '400-600', bacause 200 < 300 < 400.*
+
+*Refer to the [issues](https://github.com/sanghyun-son/EDSR-PyTorch/issues/296)*
+
 Test with results picture as:
 
 ```
