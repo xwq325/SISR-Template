@@ -81,28 +81,38 @@ python main.py --dir_data /MyModel/dataset
 Run as:
 
 ```
-python main.py --model model_name --scale 2+3+4 --patch_size 32 --batch_size 16 --save save_dir --n_GPUs 2 --reset
+python main.py --model model_name --data_test DIV2K --data_range 1-800/801-810 --scale 2+3+4 --patch_size 32 --batch_size 16 --save save_dir --n_GPUs 2 --reset
 ```
 
 Resume as:
 
 ```
-python main.py --model model_name --scale 2+3+4 --patch_size 32 --batch_size 16 --load save_dir --n_GPUs 1 --resume -1
+python main.py --model model_name --data_test DIV2K --data_range 1-800/801-810 --scale 2+3+4 --patch_size 32 --batch_size 16 --load save_dir --n_GPUs 1 --resume -1
 ```
 
 Test with results picture as:
 
 ```
-python main.py --model model_name --data_test Set5+Set14+B100+Urban100 --scale 2+3+4 --pre_train /xx/xx/model_best.pt --test_only --save_results --reset
+python main.py --model model_name --data_test Set5+Set14+B100+Urban100+Manga109 --scale 2+3+4 --pre_train /xx/xx/model_best.pt --test_only --save_results --reset
 ```
 
 Test without results as:
 
 ```
-python main.py --model model_name --data_test Set5+Set14 --scale 2+3+4 --pre_train /xx/xx/model_best.pt --test_only --reset
+python main.py --model model_name --data_test Set5+Set14+Urban100+B100 --scale 2+3+4 --pre_train /xx/xx/model_best.pt --test_only --reset
 ```
 
 ## Result Location
+
+Tips: val_dataset is the lastest dataset in "--data_test".
+
+Such as:
+
+```
+python main.py --model model_name --data_test B100+DIV2K --data_range 1-800/801-810 --scale 2+3+4 --patch_size 32 --batch_size 16 --save save_dir --n_GPUs 2 --reset
+```
+
+Above command line, the val_dataset is DIV2K(801-810), the test_dataset is B100(plot PSNR graph).
 
 Such as:
 
