@@ -65,7 +65,7 @@ class DeConv(nn.Module):
     def __init__(self, num_features, scale):
         super(DeConv, self).__init__()
 
-        if len(scale) > 1:
+        if len(scale) == 3:
             self.multi_scale = True
 
             self.deconv1 = nn.ConvTranspose2d(num_features, 3, kernel_size=17, stride=scale[0], padding=8,
@@ -73,6 +73,13 @@ class DeConv(nn.Module):
             self.deconv2 = nn.ConvTranspose2d(num_features, 3, kernel_size=17, stride=scale[1], padding=8,
                                               output_padding=1)
             self.deconv3 = nn.ConvTranspose2d(num_features, 3, kernel_size=17, stride=scale[2], padding=8,
+                                              output_padding=1)
+        elif len(scale) == 2:
+            self.multi_scale = True
+
+            self.deconv1 = nn.ConvTranspose2d(num_features, 3, kernel_size=17, stride=scale[0], padding=8,
+                                              output_padding=1)
+            self.deconv2 = nn.ConvTranspose2d(num_features, 3, kernel_size=17, stride=scale[1], padding=8,
                                               output_padding=1)
         else:
             self.multi_scale = False
@@ -95,6 +102,7 @@ class IDN(nn.Module):
     def __init__(self, args, num_features, d, s):
         super(IDN, self).__init__()
         self.scale = args.scale
+        self.idx_scale = 0
         num_features = num_features
         d = d
         s = s
@@ -117,17 +125,17 @@ class IDN(nn.Module):
                 nn.init.kaiming_normal_(m.weight)
                 nn.init.zeros_(m.bias)
 
-    def forward(self, x, idx_scale):
+    def forward(self, x):
         x = self.sub_mean(x)
 
         if len(self.scale) > 1:
-            bicubic = F.interpolate(x, scale_factor=self.scale[idx_scale], mode='bicubic', align_corners=False)
+            bicubic = F.interpolate(x, scale_factor=self.scale[self.idx_scale], mode='bicubic', align_corners=False)
         else:
             bicubic = F.interpolate(x, scale_factor=self.scale[0], mode='bicubic', align_corners=False)
 
         x = self.fblock(x)
         x = self.dblocks(x)
-        x = self.deconv(x, idx_scale, bicubic.size())
+        x = self.deconv(x, self.idx_scale, bicubic.size())
 
         out = x + bicubic
         out = self.add_mean(out)
@@ -152,3 +160,6 @@ class IDN(nn.Module):
                 if name.find('tail') == -1:
                     raise KeyError('unexpected key "{}" in state_dict'
                                    .format(name))
+
+    def set_scale(self, idx_scale):
+        self.idx_scale = idx_scale

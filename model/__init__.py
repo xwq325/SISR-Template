@@ -54,7 +54,7 @@ class Model(nn.Module):
             if self.n_GPUs > 1:
                 return P.data_parallel(self.model, x, range(self.n_GPUs))
             else:
-                return self.model(x, idx_scale)
+                return self.model(x)
         else:
             if self.chop:
                 forward_function = self.forward_chop
@@ -64,7 +64,7 @@ class Model(nn.Module):
             if self.self_ensemble:
                 return self.forward_x8(x, forward_function=forward_function)
             else:
-                return forward_function(x, idx_scale)
+                return forward_function(x)
 
     def save(self, apath, epoch, is_best=False):
         save_dirs = [os.path.join(apath, 'model_latest.pt')]
@@ -114,22 +114,27 @@ class Model(nn.Module):
         if load_from:
             self.model.load_state_dict(load_from, strict=False)
 
-    def forward_chop(self, *args, shave=10, min_size=160000):
+    def forward_chop(self, *x, shave=10, min_size=160000):
         scale = 1 if self.input_large else self.scale[self.idx_scale]
         n_GPUs = min(self.n_GPUs, 4)
         # height, width
-        h, w = args[0].size()[-2:]
+        h, w = x[0].size()[-2:]
 
         top = slice(0, h // 2 + shave)
         bottom = slice(h - h // 2 - shave, h)
         left = slice(0, w // 2 + shave)
         right = slice(w - w // 2 - shave, w)
-        x_chops = [torch.cat([
-            a[..., top, left],
-            a[..., top, right],
-            a[..., bottom, left],
-            a[..., bottom, right]
-        ]) for a in args]
+
+        x_chops = []
+        for a in x:
+            if torch.is_tensor(a):
+                chops = torch.cat([
+                    a[..., top, left],
+                    a[..., top, right],
+                    a[..., bottom, left],
+                    a[..., bottom, right]
+                ])
+                x_chops.append(chops)
 
         y_chops = []
         if h * w < 4 * min_size:
@@ -145,7 +150,8 @@ class Model(nn.Module):
                         y_chop.extend(_y.chunk(n_GPUs, dim=0))
         else:
             for p in zip(*x_chops):
-                y = self.forward_chop(*p, shave=shave, min_size=min_size)
+                p1 = [p[0].unsqueeze(0)]
+                y = self.forward_chop(*p1, shave=shave, min_size=min_size)
                 if not isinstance(y, list): y = [y]
                 if not y_chops:
                     y_chops = [[_y] for _y in y]
