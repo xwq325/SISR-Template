@@ -44,7 +44,7 @@ python main.py --data_test Manga109
 
 ## Add Params and Flops
 
-Install the dependency 'thop'.
+Install the dependency 'thop'. And replace the profile.py with my version in lib folder.
 
 ```
 pip install thop
@@ -56,13 +56,15 @@ Calculate the params and flops in the first picture of the given dataset with th
 python main.py --params_flops_idx_scale 0 --params_flops_dataset Set5
 ```
 
-*Tips: The given idx_scale and dataset_name must be an existing one. You can't test your model such as:*
+Tips: The given idx_scale and dataset_name must be an existing one. You can't test your model such as:
 
 ```
 python main.py --scale 2+3 --data_test Set14+Urban100 --params_flops_idx_scale 2 --params_flops_dataset Set5
 ```
 
-*Because the exist idx_scale is 0 or 1, and the exist test dataset is Set14 or Urban100.*
+Because the exist idx_scale is 0 or 1, and the exist test dataset is Set14 or Urban100.
+
+*The FLOPS calculated by Thop seems to be actually MACs, but there are still some issues, so the results are for reference only*
 
 ## Add IDN Implementation
 
