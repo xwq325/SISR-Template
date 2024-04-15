@@ -3,18 +3,18 @@ import math
 from decimal import Decimal
 import random
 import utility
-
 import torch
 import torch.nn.utils as utils
 from tqdm import tqdm
+from thop import profile, clever_format
 
 
 class Trainer():
     def __init__(self, args, loader, my_model, my_loss, ckp):
         self.args = args
         self.scale = args.scale
-
         self.ckp = ckp
+        self.tensor = 0
         self.loader_train = loader.loader_train
         self.loader_test = loader.loader_test
         self.model = my_model
@@ -87,7 +87,6 @@ class Trainer():
             torch.zeros(1, len(self.loader_test), len(self.scale), 2)  # for PSNR and SSIM
         )
         self.model.eval()
-
         timer_test = utility.timer()
         if self.args.save_results: self.ckp.begin_background()
         for idx_data, d in enumerate(self.loader_test):
@@ -97,18 +96,21 @@ class Trainer():
                     lr = lr[idx_scale]
                     hr = hr[idx_scale]
                     lr, hr = self.prepare(lr, hr)
+                    if not torch.is_tensor(self.tensor):
+                        if idx_scale == self.args.params_flops_idx_scale and d.dataset.name == self.args.params_flops_dataset:
+                            self.tensor = lr
                     sr = self.model(lr, idx_scale)
-                    
-                    sr = utility.quantize(sr, self.args.rgb_range)            
+
+                    sr = utility.quantize(sr, self.args.rgb_range)
                     save_list = [sr]
-                    
+
                     self.ckp.log[-1, idx_data, idx_scale, 0] += utility.calc_psnr(
                         sr, hr, scale, self.args.rgb_range, dataset=d
                     )
                     self.ckp.log[-1, idx_data, idx_scale, 1] += utility.calc_ssim(
                         sr, hr, scale, self.args.rgb_range, dataset=d
                     )
-                    
+
                     if self.args.save_gt:
                         save_list.extend([lr, hr])
 
@@ -168,3 +170,9 @@ class Trainer():
         else:
             epoch = self.optimizer.get_last_epoch() + 1
             return epoch >= self.args.epochs
+
+    def calc_params_flops(self):
+        macs, params = profile(self.model, inputs=(self.tensor,), idx_scale=self.args.params_flops_idx_scale)
+        macs, params = clever_format([macs, params], "%.3f")
+        print("Model's MACs is {} on the first picture of the {} with scale x{} .".format(macs, self.args.params_flops_dataset, self.args.scale[self.args.params_flops_idx_scale]))
+        print("Model's Params is {} on the first picture of the {} with scale x{} .".format(params, self.args.params_flops_dataset, self.args.scale[self.args.params_flops_idx_scale]))

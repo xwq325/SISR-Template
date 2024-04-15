@@ -96,35 +96,28 @@ class Upsampler(nn.Sequential):
 
 
 class UpsampleBlock(nn.Module):
-    def __init__(self,
-                 n_channels, scale, multi_scale,
-                 group=1):
+    def __init__(self, n_channels, scale, group=1):
         super(UpsampleBlock, self).__init__()
-
-        if multi_scale:
-            self.up2 = _UpsampleBlock(n_channels, scale=2, group=group)
-            self.up3 = _UpsampleBlock(n_channels, scale=3, group=group)
-            self.up4 = _UpsampleBlock(n_channels, scale=4, group=group)
+        self.multi_scale = True
+        if len(scale) == 3:
+            self.up1 = _UpsampleBlock(n_channels, scale=scale[0], group=group)
+            self.up2 = _UpsampleBlock(n_channels, scale=scale[1], group=group)
+            self.up3 = _UpsampleBlock(n_channels, scale=scale[2], group=group)
+        elif len(scale) == 2:
+            self.up1 = _UpsampleBlock(n_channels, scale=scale[0], group=group)
+            self.up2 = _UpsampleBlock(n_channels, scale=scale[1], group=group)
         else:
             self.up = _UpsampleBlock(n_channels, scale=scale, group=group)
+            self.multi_scale = False
 
-        # if multi_scale:
-        #     self.up2 = Upsampler(default_conv, 2, n_channels, act=False)
-        #     self.up3 = Upsampler(default_conv, 3, n_channels, act=False)
-        #     self.up4 = Upsampler(default_conv, 4, n_channels, act=False)
-        # else:
-        #     self.up =  Upsampler(default_conv, scale[0], n_channels, act=False)
-
-        self.multi_scale = multi_scale
-
-    def forward(self, x, scale):
+    def forward(self, x, idx_scale):
         if self.multi_scale:
-            if scale == 0:
+            if idx_scale == 0:
+                return self.up1(x)
+            elif idx_scale == 1:
                 return self.up2(x)
-            elif scale == 1:
+            elif idx_scale == 2:
                 return self.up3(x)
-            elif scale == 2:
-                return self.up4(x)
         else:
             return self.up(x)
 

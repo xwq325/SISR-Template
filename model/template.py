@@ -22,7 +22,10 @@ class SISR(nn.Module):
         super(SISR, self).__init__()
         self.scale = args.scale
         self.idx_scale = 0
-        num_features = num_features
+
+        self.input_conv = common.default_conv(in_channels=3, out_channels=num_features, kernel_size=3)  # RGB
+        self.upsample = common.UpsampleBlock(n_channels=num_features, scale=self.scale, group=1)
+        self.output_conv = common.default_conv(in_channels=num_features, out_channels=args.n_colors, kernel_size=3)
 
         self.sub_mean = common.MeanShift(args.rgb_range)
         self.add_mean = common.MeanShift(args.rgb_range, sign=1)
@@ -43,6 +46,9 @@ class SISR(nn.Module):
     # This is your model's forward method.
     def forward(self, x):
         x = self.sub_mean(x)
+        x = self.input_conv(x)
+        x = self.upsample(x, self.idx_scale)
+        x = self.output_conv(x)
         out = self.add_mean(x)
         return out
 

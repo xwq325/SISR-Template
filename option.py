@@ -103,7 +103,7 @@ parser.add_argument('--gan_k', type=int, default=1,
 # Optimization specifications
 parser.add_argument('--lr', type=float, default=1e-4,
                     help='learning rate')
-parser.add_argument('--decay', type=str, default='200',
+parser.add_argument('--decay', type=str, default='200-400',
                     help='learning rate decay type')
 parser.add_argument('--gamma', type=float, default=0.5,
                     help='learning rate decay factor for step decay')
@@ -142,6 +142,11 @@ parser.add_argument('--save_results', action='store_true',
                     help='save output results')
 parser.add_argument('--save_gt', action='store_true',
                     help='save low-resolution and high-resolution images together')
+
+parser.add_argument('--params_flops_idx_scale', type=int, default=-1,
+                    help='calc params and flops in idx_scale which you have chosen')
+parser.add_argument('--params_flops_dataset', type=str, default='',
+                    help='calc params and flops in the dataset which you have chosen')
 
 args = parser.parse_args()
 template.set_template(args)

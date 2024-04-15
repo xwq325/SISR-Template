@@ -1,6 +1,4 @@
 import os
-
-os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 import torch
 import numpy as np
 import random
@@ -10,6 +8,8 @@ import model
 import loss
 from option import args
 from trainer import Trainer
+
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 
 torch.manual_seed(args.seed)
 random.seed(args.seed)
@@ -38,7 +38,8 @@ def main():
             while not t.terminate():
                 t.train()
                 t.test()
-
+            if args.params_flops_idx_scale != -1 and args.params_flops_dataset != '':
+                t.calc_params_flops()
             checkpoint.done()
 
 
