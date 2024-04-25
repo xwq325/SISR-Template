@@ -49,5 +49,34 @@ def set_template(args):
         args.n_resblocks = 20
         args.n_feats = 64
         args.patch_size = 41
-        args.lr = 1e-1
+        args.lr = 1e-4
+
+    if args.template.find('DRRN') >= 0:
+        args.model = 'DRRN'
+        args.n_colors = 1
+        args.n_layers = 25
+        args.n_feats = 128
+
+    if args.template.find('LapSRN') >= 0:
+        args.model = 'LapSRN'
+        args.n_layers = 10
+        args.loss = "1*MSE"
+        args.n_colors = 1
+
+    if args.template.find('SRCNN') >= 0:
+        args.model = 'SRCNN'
+        args.loss = "1*MSE"
+        # args.n_colors = 1
+        args.is_sub_mean = True
+        args.patch_size = 128
+        args.n_feats = 32
+
+    if args.template.find("SRRESNET") >= 0:
+        args.model = 'SRRESNET'
+        args.n_feats = 16
+        args.epochs = 500
+        args.loss = '1*MSE'
+        args.patch_size = 128
+
+
 
