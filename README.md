@@ -70,6 +70,19 @@ Because the exist idx_scale is 0 or 1, and the exist test dataset is Set14 or Ur
 
 [IDN](arxiv.org/abs/1803.09454): Fast and Accurate Single Image Super-Resolution via Information Distillation Network
 
+## Add DRRN\LapSRN\SRCNN and Template
+
+Base on .
+
+## Compare SR with Other Model
+
+Default row 2 and col 4, if you need other shape, please change the join method of the img_draw.py
+
+Use it by:
+```
+python img_draw.py --input_path input_SR --save_path output_SR --x 100 --y 200 --scale 0.6 --model_name HR-Bicubic-Model1-Model2-Model3-Model4-Model5-Model6(ours)
+```
+
 ## CUDA out of memory
 
 When codes val or test on DIV2K, the error will be happen.
