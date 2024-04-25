@@ -72,7 +72,7 @@ Because the exist idx_scale is 0 or 1, and the exist test dataset is Set14 or Ur
 
 ## Add DRRN\LapSRN\SRCNN and Template
 
-Base on .
+Base on [Elin24](https://github.com/Elin24/PSPL)
 
 ## Compare SR with Other Model
 
