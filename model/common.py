@@ -107,7 +107,7 @@ class UpsampleBlock(nn.Module):
             self.up1 = _UpsampleBlock(n_channels, scale=scale[0], group=group)
             self.up2 = _UpsampleBlock(n_channels, scale=scale[1], group=group)
         else:
-            self.up = _UpsampleBlock(n_channels, scale=scale, group=group)
+            self.up = _UpsampleBlock(n_channels, scale=scale[0], group=group)
             self.multi_scale = False
 
     def forward(self, x, idx_scale):
